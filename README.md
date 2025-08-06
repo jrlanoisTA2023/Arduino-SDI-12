@@ -1,3 +1,14 @@
+# Fork Note
+The only thing changed with this fork is that the forceListen() method changes the state first to the SDI12_TRANSMITTING first before setting it to the SDI12_LISTENING state. This 
+addresses looking for BREAKS and MARKING PERIODS from external methods using digitalRead. What would happen is that when those are called from external methods, the class would just 
+stop checking the interrupt for some reason.
+
+To make finding breaks and marking periods easier, I implemented the following in SDI12.hpp / SDI12.cpp:
+
+`hasReceivedBreak()` -- to check if there has been a break
+`hasReceivedMarking()` -- to check if there has been a mark
+
+and I needed to add a variable, `latestLevelRecieved`, which is a private one used to remember the previous level received. This variable is set in the receiveISR().
 
 # SDI-12 for Arduino<!-- {#mainpage} -->
 
