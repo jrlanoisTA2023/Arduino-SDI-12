@@ -243,6 +243,14 @@ int8_t SDI12::getDataPin() {
   return _dataPin;
 }
 
+bool SDI12::hasReceivedBreak() {
+    return _latestLevelReceived && (READTIME - prevBitTCNT) > SDI12_LINE_BREAK_MICROS;
+}
+
+bool SDI12::hasReceivedMarking() {
+    return !_latestLevelReceived && (READTIME - prevBitTCNT) > SDI12_LINE_MARK_MICROS;
+}
+
 /* ================ Using more than one SDI-12 object ===============================*/
 // a method for setting the current object as the active object
 bool SDI12::setActive() {
@@ -661,6 +669,9 @@ void ISR_MEM_ACCESS SDI12::receiveISR() {
     READTIME;  // time of this data transition (plus ISR latency)
 
   uint8_t pinLevel = digitalRead(_dataPin);  // current RX data level
+
+  // Record the current pin level
+  _latestLevelReceived = pinLevel;
 
   // Check how many bit times have passed since the last change
   uint16_t rxBits = SDI12Timer::bitTimes(thisBitTCNT - prevBitTCNT);
