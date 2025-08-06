@@ -715,6 +715,18 @@ class SDI12 : public Stream {
    * @param dataPin  The data pin's digital pin number
    */
   void setDataPin(int8_t dataPin);
+  /**
+   * @brief Get the whether or not the SDI-12 instance has received a break (HIGH on wire >= 12 ms)
+   *
+   * @return Whether or not the SDI-12 instance has received a break
+   */
+  bool hasReceivedBreak();
+  /**
+   * @brief Get the whether or not the SDI-12 instance has received a marking (LOW on wire >= 8.33 ms)
+   *
+   * @return Whether or not the SDI-12 instance has received a marking
+   */
+  bool hasReceivedMarking()
 #ifdef SDI12_CHECK_PARITY
   bool _parityFailure;
 #endif
