@@ -387,7 +387,7 @@ class SDI12 : public Stream {
   /**
    * @brief the latest state of the wire received (0 for LOW, 1 for HIGH)
    */
-  bool latestLevelReceived;
+  bool _latestLevelReceived;
   /**@}*/
 
 
