@@ -371,6 +371,7 @@ void SDI12::forceHold() {
 
 // forces a SDI12_LISTENING state.
 void SDI12::forceListen() {
+  setState(SDI12_TRANSMITTING);
   setState(SDI12_LISTENING);
 }
 
