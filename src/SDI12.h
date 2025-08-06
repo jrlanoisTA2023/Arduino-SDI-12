@@ -384,6 +384,10 @@ class SDI12 : public Stream {
    * @brief the value of the character being built
    */
   uint8_t rxValue;
+  /**
+   * @brief the latest state of the wire received (0 for LOW, 1 for HIGH)
+   */
+  bool latestLevelReceived;
   /**@}*/
 
 
@@ -726,7 +730,7 @@ class SDI12 : public Stream {
    *
    * @return Whether or not the SDI-12 instance has received a marking
    */
-  bool hasReceivedMarking()
+  bool hasReceivedMarking();
 #ifdef SDI12_CHECK_PARITY
   bool _parityFailure;
 #endif
