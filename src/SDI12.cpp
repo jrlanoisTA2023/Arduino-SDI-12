@@ -203,6 +203,8 @@ SDI12::~SDI12() {
 
 // Begin
 void SDI12::begin() {
+  // Set the _latestLevelReceived to thee current pin state
+  _latestLevelReceived = digitalRead(_dataPin);
 #if defined(ESP32) || defined(ESP8266)
   // Add and remove a fake interrupt to avoid errors with gpio_install_isr_service
   attachInterrupt(digitalPinToInterrupt(_dataPin), nullptr, CHANGE);
