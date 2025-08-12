@@ -67,7 +67,7 @@ volatile uint8_t SDI12::_rxBufferHead = 0;             // index of buff head
 // reveals the number of characters available in the buffer
 int SDI12::available() {
   //SDI12_YIELD()
-  while(rxState != WAITING_FOR_START_BIT) {vTaskDelay(10);}
+  while(rxState != WAITING_FOR_START_BIT) {delay(1);}
   if (_bufferOverflow) return -1;
   return (_rxBufferTail + SDI12_BUFFER_SIZE - _rxBufferHead) % SDI12_BUFFER_SIZE;
 }
@@ -75,7 +75,7 @@ int SDI12::available() {
 // reveals the next character in the buffer without consuming
 int SDI12::peek() {
   //SDI12_YIELD()
-  while(rxState != WAITING_FOR_START_BIT) {vTaskDelay(10);}
+  while(rxState != WAITING_FOR_START_BIT) {delay(1);}
   if (_rxBufferHead == _rxBufferTail) return -1;  // Empty buffer? If yes, -1
   return _rxBuffer[_rxBufferHead];                // Otherwise, read from "head"
 }
@@ -91,7 +91,7 @@ void SDI12::clearBuffer() {
 // reads in the next character from the buffer (and moves the index ahead)
 int SDI12::read() {
   //SDI12_YIELD()
-  while(rxState != WAITING_FOR_START_BIT) {vTaskDelay(10);}
+  while(rxState != WAITING_FOR_START_BIT) {delay(1);}
   _bufferOverflow = false;                        // Reading makes room in the buffer
   if (_rxBufferHead == _rxBufferTail) return -1;  // Empty buffer? If yes, -1
   uint8_t nextChar = _rxBuffer[_rxBufferHead];    // Otherwise, grab char at head
